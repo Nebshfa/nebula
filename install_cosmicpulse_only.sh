@@ -375,9 +375,9 @@ EOL
 # Scarica le immagini
 print_message "Download delle immagini di sfondo..."
 cd /var/www/pterodactyl/blueprint/extensions/CosmicPulse/assets || handle_error "Impossibile accedere alla directory assets."
-wget https://images.unsplash.com/photo-1472214103451-9374bd1c798e -O login-background.jpg || handle_error "Impossibile scaricare login-background.jpg."
-wget https://images.unsplash.com/photo-1501862700950-22794cb7c1b9 -O intro-background.jpg || handle_error "Impossibile scaricare intro-background.jpg."
-wget https://cdn-icons-png.flaticon.com/512/2991/2991818.png -O logo.png || handle_error "Impossibile scaricare logo.png."
+wget --timeout=10 --tries=3 https://images.unsplash.com/photo-1497215728101-856f4ea42174 -O login-background.jpg || handle_error "Impossibile scaricare login-background.jpg."
+wget --timeout=10 --tries=3 https://images.unsplash.com/photo-1451187580459-43490279c0fa -O intro-background.jpg || handle_error "Impossibile scaricare intro-background.jpg."
+wget --timeout=10 --tries=3 https://cdn-icons-png.flaticon.com/512/2991/2991818.png -O logo.png || handle_error "Impossibile scaricare logo.png."
 
 # Imposta i permessi
 print_message "Impostazione dei permessi..."
