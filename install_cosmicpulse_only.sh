@@ -33,8 +33,18 @@ fi
 cd /var/www/pterodactyl || handle_error "Impossibile accedere alla directory di Pterodactyl."
 php artisan --version || handle_error "Pterodactyl non sembra essere installato correttamente."
 
+# Crea la directory di sviluppo per Blueprint
+print_message "Creazione della directory di sviluppo per Blueprint..."
+mkdir -p /var/www/pterodactyl/blueprint/extensions/ || handle_error "Impossibile creare la directory di sviluppo."
+chown -R www-data:www-data /var/www/pterodactyl/blueprint/extensions/
+chmod -R 755 /var/www/pterodactyl/blueprint/extensions/
+
 # Crea l'estensione CosmicPulse
 print_message "Creazione dell'estensione CosmicPulse..."
+if [ -d "/var/www/pterodactyl/blueprint/extensions/CosmicPulse" ]; then
+    print_message "La directory CosmicPulse esiste già, la sovrascrivo..."
+    rm -rf /var/www/pterodactyl/blueprint/extensions/CosmicPulse
+fi
 blueprint -create CosmicPulse || handle_error "Impossibile creare l'estensione CosmicPulse."
 
 # Configura extension.yml
