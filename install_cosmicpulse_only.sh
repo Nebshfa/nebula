@@ -39,6 +39,16 @@ mkdir -p /var/www/pterodactyl/blueprint/extensions/ || handle_error "Impossibile
 chown -R www-data:www-data /var/www/pterodactyl/blueprint/extensions/
 chmod -R 755 /var/www/pterodactyl/blueprint/extensions/
 
+# Gestione della directory .blueprint
+print_message "Preparazione della directory .blueprint per la compilazione..."
+if [ -d "/var/www/pterodactyl/.blueprint/blueprint" ]; then
+    print_message "La directory .blueprint/blueprint esiste, creo un backup e la svuoto..."
+    mv /var/www/pterodactyl/.blueprint/blueprint /var/www/pterodactyl/.blueprint/blueprint_backup_$(date +%Y%m%d_%H%M%S)
+    mkdir -p /var/www/pterodactyl/.blueprint/blueprint
+    chown -R www-data:www-data /var/www/pterodactyl/.blueprint
+    chmod -R 755 /var/www/pterodactyl/.blueprint
+fi
+
 # Crea l'estensione CosmicPulse
 print_message "Creazione dell'estensione CosmicPulse..."
 if [ -d "/var/www/pterodactyl/blueprint/extensions/CosmicPulse" ]; then
