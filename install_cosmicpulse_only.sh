@@ -16,7 +16,14 @@ handle_error() {
     exit 1
 }
 
-print_message "Inizio della configurazione del tema CosmicPulse per Pterodactyl..."
+print_message "Inizio della configurazione del tema CosmicPulse per Pterodactyl usando Blueprint..."
+
+# Verifica che Blueprint sia installato
+print_message "Verifica della presenza di Blueprint..."
+if ! command -v blueprint &> /dev/null; then
+    handle_error "Blueprint non trovato. Installalo manualmente prima di eseguire questo script (es. da https://blueprint.zip)."
+fi
+blueprint -v || handle_error "Blueprint non sembra essere installato correttamente."
 
 # Verifica Pterodactyl
 print_message "Verifica dell'installazione di Pterodactyl..."
