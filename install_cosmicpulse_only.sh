@@ -16,22 +16,7 @@ handle_error() {
     exit 1
 }
 
-print_message "Inizio dell'installazione del tema CosmicPulse per Pterodactyl..."
-
-# Aggiorna il sistema
-print_message "Aggiornamento del sistema..."
-apt update && apt upgrade -y || handle_error "Impossibile aggiornare il sistema."
-
-# Installa Node.js (versione 18)
-print_message "Installazione di Node.js 18..."
-curl -sL https://deb.nodesource.com/setup_18.x | bash - || handle_error "Impossibile configurare Node.js."
-apt install -y nodejs || handle_error "Impossibile installare Node.js."
-node -v && npm -v || handle_error "Node.js o npm non installati correttamente."
-
-# Installa Yarn
-print_message "Installazione di Yarn..."
-npm install -g yarn || handle_error "Impossibile installare Yarn."
-yarn --version || handle_error "Yarn non installato correttamente."
+print_message "Inizio della configurazione del tema CosmicPulse per Pterodactyl..."
 
 # Verifica Pterodactyl
 print_message "Verifica dell'installazione di Pterodactyl..."
@@ -41,17 +26,8 @@ fi
 cd /var/www/pterodactyl || handle_error "Impossibile accedere alla directory di Pterodactyl."
 php artisan --version || handle_error "Pterodactyl non sembra essere installato correttamente."
 
-# Installa Blueprint
-print_message "Installazione di Blueprint..."
-cd /usr/local/bin || handle_error "Impossibile accedere a /usr/local/bin."
-wget https://blueprint.zip/installer.sh || handle_error "Impossibile scaricare Blueprint."
-chmod +x installer.sh || handle_error "Impossibile rendere eseguibile installer.sh."
-./installer.sh || handle_error "Impossibile installare Blueprint."
-blueprint -v || handle_error "Blueprint non installato correttamente."
-
 # Crea l'estensione CosmicPulse
 print_message "Creazione dell'estensione CosmicPulse..."
-cd /var/www/pterodactyl || handle_error "Impossibile accedere alla directory di Pterodactyl."
 blueprint -create CosmicPulse || handle_error "Impossibile creare l'estensione CosmicPulse."
 
 # Configura extension.yml
@@ -410,5 +386,5 @@ blueprint -build || handle_error "Impossibile compilare il tema."
 print_message "Riavvio del servizio web..."
 systemctl restart nginx || systemctl restart apache2 || handle_error "Impossibile riavviare il servizio web."
 
-print_message "Installazione completata! Visita http://<tuo_ip_vps>:8080 per vedere il tema CosmicPulse."
-print_message "Nota: Sostituisci <tuo_ip_vps> con l'IP della tua VPS e la porta configurata."
+print_message "Configurazione completata! Visita http://34.170.166.161:8080 per vedere il tema CosmicPulse."
+print_message "Nota: Verifica la porta configurata se il pannello non si apre."
